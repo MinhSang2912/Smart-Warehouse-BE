@@ -1,24 +1,63 @@
-﻿namespace Smart_Warehouse.Models.Entities
+﻿using Smart_Warehouse.Models.Entities.Order;
+
+namespace Smart_Warehouse.Models.Entities
 {
-    public class Product
+    public class Product : BaseEntity
     {
+        /// <summary>
+        /// Id sản phẩm
+        /// </summary>
         public Guid Id { get; set; } = Guid.NewGuid();
 
+        /// <summary>
+        /// Code sản phẩm
+        /// </summary>
         public string SKU { get; set; } = string.Empty;
+        
+        /// <summary>
+        /// Tên sản phẩm
+        /// </summary>
         public string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Mô tả sản phẩm
+        /// </summary>
         public string? Description { get; set; }
-        public decimal Price { get; set; }
+
+        /// <summary>
+        /// Cảnh báo thiếu hàng
+        /// </summary>
+        public int MinThreshold { get; set; } = 10; 
+
+        /// <summary>
+        /// Đơn vị tính
+        /// </summary>
         public string Unit { get; set; } = "Cái";
 
-        public int MinStock { get; set; } = 10;
-        public int MaxStock { get; set; } = 500;
+        /// <summary>
+        /// Giá sản phẩm
+        /// </summary>
+        public decimal Price { get; set; }
 
-        public Guid CategoryId { get; set; }
-        public Catagory Category { get; set; } = null!;
+        /// <summary>
+        /// Mã danh mục
+        /// </summary>
+        public int CategoryId { get; set; }
 
-        public bool IsActive { get; set; } = true;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
+        /// <summary>
+        /// Khóa ngoại danh mục sản phẩm (Navigation Property)
+        /// </summary>
+        public virtual Category Category { get; set; } = null!;
+
+        /// <summary>
+        /// Id nhà cung cấp
+        /// </summary>
+        public int SupplierId { get; set; }
+
+        /// <summary>
+        /// Khóa ngoại nhà cung cấp (navigation property)
+        /// </summary>
+        public virtual Supplier Supplier { get; set; } = null!;
 
     }
 }

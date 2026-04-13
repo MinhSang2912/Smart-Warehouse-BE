@@ -4,30 +4,25 @@
     /// Đại diện cho người dùng của hệ thống Smart Warehouse.
     /// Dùng để quản lý tài khoản, phân quyền và theo dõi hoạt động nhập/xuất kho.
     /// </summary>
-    public class User
+    public class User : BaseEntity
     {
         /// <summary>
-        /// Khóa chính của người dùng (sử dụng Guid để dễ dàng quản lý và đồng bộ).
+        /// Tên đăng nhập
         /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public required string Username { get; set; } 
 
         /// <summary>
-        /// Tên đăng nhập (Username) - dùng để đăng nhập hệ thống.
+        /// Mật khẩu đã được
         /// </summary>
-        public string Username { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Mật khẩu đã được hash (không lưu mật khẩu dạng plain text).
-        /// </summary>
-        public string PasswordHash { get; set; } = string.Empty;
+        public required string Password { get; set; }
 
         /// <summary>
         /// Tên đầy đủ của người dùng.
         /// </summary>
-        public string FullName { get; set; } = string.Empty;
+        public string? FullName { get; set; }
 
         /// <summary>
-        /// Địa chỉ email của người dùng (dùng để khôi phục mật khẩu, nhận thông báo).
+        /// Địa chỉ email của người dùng 
         /// </summary>
         public string? Email { get; set; }
 
@@ -37,34 +32,18 @@
         public string? Phone { get; set; }
 
         /// <summary>
-        /// Vai trò của người dùng trong hệ thống (Admin, WarehouseStaff, Manager...).
+        /// Ngày tháng năm sinh 
         /// </summary>
-        public string Role { get; set; } = "WarehouseStaff";   // Admin, Manager, Staff
+        public DateTime? DateofBirth { get; set; }
 
         /// <summary>
-        /// Trạng thái tài khoản. False = tài khoản đã bị khóa.
+        /// Id của vai trò
         /// </summary>
-        public bool IsActive { get; set; } = true;
+        public int RoleId { get; set; }
 
         /// <summary>
-        /// Thời điểm tài khoản được tạo.
+        /// Khóa ngoại đến vai trò của người dùng
         /// </summary>
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        /// <summary>
-        /// Thời điểm cập nhật thông tin người dùng lần cuối.
-        /// </summary>
-        public DateTime? UpdatedAt { get; set; }
-
-        /// <summary>
-        /// Thời điểm lần cuối đăng nhập thành công (dùng để theo dõi hoạt động).
-        /// </summary>
-        public DateTime? LastLoginAt { get; set; }
-
-        // ==================== Navigation Properties ====================
-
-        /// <summary>
-        /// Danh sách các giao dịch nhập/xuất kho do người dùng này thực hiện.
-        /// </summary>
+        public virtual Role? Role { get; set; } = null;
     }
 }
