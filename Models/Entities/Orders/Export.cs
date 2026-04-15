@@ -21,6 +21,11 @@ namespace Smart_Warehouse.Models.Entities.Orders
         public int WarehouseId { get; set; }
 
         /// <summary>
+        /// Khóa ngoại nhà kho (navigation property)
+        /// </summary>
+        public virtual Warehouse Warehouse { get; set; } = null!;
+
+        /// <summary>
         /// Mô tả
         /// </summary>
         public string? Description { get; set; }

@@ -14,7 +14,9 @@
             Pending = 0,
             Approved = 1,
             Rejected = 2,
-            Complete = 3
+            Completed = 3,
+            Failed = 4,
+            All =5,
         }
     }
 }

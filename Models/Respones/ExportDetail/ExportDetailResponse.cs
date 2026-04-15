@@ -11,8 +11,17 @@
         /// <summary>
         /// Id sản phẩm
         /// </summary>
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
 
+        /// <summary>
+        /// Tên sản phẩm
+        /// </summary>
+        public string ProductName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// SKU sản phẩm
+        /// </summary>
+        public string? ProductSKU { get; set; }
         /// <summary>
         /// Số lượng xuất
         /// </summary>

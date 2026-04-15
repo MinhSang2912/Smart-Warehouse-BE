@@ -11,7 +11,10 @@ namespace Smart_Warehouse.Models.Profiles
         {
             CreateMap<CreateImportRequest, Import>();
             CreateMap<UpdateImportRequest, Import>();
-            CreateMap<Import, ImportResponse>();
+            CreateMap<Import, ImportResponse>()
+                .ForMember(i => i.WarehouseName, opt => opt.MapFrom(src => src.Warehouse.Name))
+                .ForMember(i => i.Details, opt => opt.MapFrom(src => src.Details))
+                .ForMember(i => i.UserName, opt => opt.MapFrom(src => src.User.Username));
         }
     }
 }

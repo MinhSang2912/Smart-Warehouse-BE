@@ -1,5 +1,6 @@
 ﻿using Smart_Warehouse.Common;
 using Smart_Warehouse.Models.Entities.Order;
+using Smart_Warehouse.Models.Respones.ImportDetail;
 using static Smart_Warehouse.Common.Enums;
 
 namespace Smart_Warehouse.Models.Respones.Import
@@ -17,6 +18,11 @@ namespace Smart_Warehouse.Models.Respones.Import
         public int UserId { get; set; }
 
         /// <summary>
+        /// Tên người dùng
+        /// </summary>
+        public string? UserName { get; set; }
+
+        /// <summary>
         /// Id nhà cung cấp
         /// </summary>
         public int SupplierId { get; set; }
@@ -25,6 +31,11 @@ namespace Smart_Warehouse.Models.Respones.Import
         /// Id Kho hàng nhập vào
         /// </summary>
         public int WarehouseId { get; set; }
+
+        /// <summary>
+        /// Tên nhà kho
+        /// </summary>
+        public string? WarehouseName { get; set; }
 
         /// <summary>
         /// Trạng thái phiếu nhập
@@ -44,16 +55,23 @@ namespace Smart_Warehouse.Models.Respones.Import
         /// <summary>
         /// Tên người nhận hàng
         /// </summary>
-        public string? ReceiverName { get; set; }
+        public string? Receiver { get; set; }
 
         /// <summary>
         /// Tên người vận chuyển
         /// </summary>
-        public string? CarrierName { get; set; }
+        public string? Carrier { get; set; }
 
         /// <summary>
         /// Tên người duyệt
         /// </summary>
-        public string? ApproverName { get; set; }
+        public string? Approver { get; set; }
+
+        /// <summary>
+        /// Thời gian tạo
+        /// </summary>
+        public DateTime? CreatedAt { get; set; }
+
+        public virtual List<ImportDetailResponse> Details { get; set; } = new();
     }
 }

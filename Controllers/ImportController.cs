@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smart_Warehouse.Common;
 using Smart_Warehouse.Data;
 using Smart_Warehouse.Models.Entities.Inventories;
 using Smart_Warehouse.Models.Entities.Order;
+using Smart_Warehouse.Models.Requests;
 using Smart_Warehouse.Models.Requests.Import;
+using Smart_Warehouse.Models.Respones.Import;
 using static Smart_Warehouse.Common.Enums;
 
 namespace Smart_Warehouse.Controllers
@@ -24,11 +27,31 @@ namespace Smart_Warehouse.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllImports()
+        public async Task<ActionResult<List<ImportResponse>>> GetAllImports([FromQuery]FillterRequest fillter)
         {
-            var imports = await _context.Imports.ToListAsync();
-            return Ok(imports);
+            var query = _context.Imports
+                .ProjectTo<ImportResponse>(_mapper.ConfigurationProvider)
+                .AsQueryable();
+
+            if (fillter.status.HasValue && fillter.status != Status.All)
+            {
+                query = query.Where(x => x.Status == fillter.status);
+            }
+            if (fillter.date.HasValue)
+            {
+                var fillterDate = fillter.date.Value;
+                query = query.Where(x => x.CreatedAt == fillterDate);
+            }
+            if (!string.IsNullOrWhiteSpace(fillter.warehouse) && fillter.warehouse != "all")
+            {
+                query = query.Where(x => x.WarehouseName == fillter.warehouse);
+            }
+
+            var responses = await query.ToListAsync();
+
+            return Ok(responses);
         }
+
 
         [HttpPost]
         public async Task<ActionResult> CreateImport([FromBody] CreateImportRequest request)

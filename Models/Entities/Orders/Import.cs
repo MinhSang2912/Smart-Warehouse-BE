@@ -52,17 +52,17 @@ namespace Smart_Warehouse.Models.Entities.Order
         /// <summary>
         /// Tên người nhận hàng
         /// </summary>
-        public string? ReceiverName { get; set; }
+        public string? Receiver { get; set; }
 
         /// <summary>
         /// Tên người vận chuyển
         /// </summary>
-        public string? CarrierName { get; set; }
+        public string? Carrier { get; set; }
 
         /// <summary>
         /// Tên người duyệt
         /// </summary>
-        public string? ApproverName { get; set; }
+        public string? Approver { get; set; }
 
         /// <summary>
         /// Lấy danh sách chi tiết phiếu nhập (navigation property)

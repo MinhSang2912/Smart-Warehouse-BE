@@ -28,7 +28,11 @@ namespace Smart_Warehouse.Controllers
             var inventory = await _context.Inventories
                 .Include(i => i.Warehouse)
                 .Include(i => i.Product)
+                .Where(i =>  !(i.Quantity == 0 && i.Product.Supplier.IsActive == false))
                 .ToListAsync();
+            
+
+
 
             var response = _mapper.Map<List<InventoryResponse>>(inventory);
             
