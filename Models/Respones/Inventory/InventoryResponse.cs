@@ -27,6 +27,11 @@ namespace Smart_Warehouse.Models.Respones.Inventory
         public string? ProductName { get; set; }
 
         /// <summary>
+        /// Trạng thái hoạt động của sản phẩm
+        /// </summary>
+        public bool? ProductIsActive { get; set; }
+
+        /// <summary>
         /// Số lượng nhỏ nhất
         /// </summary>
         public int minQuantity {  get; set; }
@@ -36,6 +41,9 @@ namespace Smart_Warehouse.Models.Respones.Inventory
         /// </summary>
         public int Quantity { get; set; } = 0;
 
-        public virtual ICollection<InventoryLogResponse> InventoryLogs { get; set; } = new List<InventoryLogResponse>();
+        /// <summary>
+        /// Danh sách log
+        /// </summary>
+        public virtual List<InventoryLogResponse> Logs { get; set; } = new  ();
     }
 }

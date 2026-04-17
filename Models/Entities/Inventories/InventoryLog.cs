@@ -20,6 +20,11 @@ namespace Smart_Warehouse.Models.Entities.Inventories
         public string? Code { get; set; }
 
         /// <summary>
+        /// Số lượng thay đổi
+        /// </summary>
+        public int Quantity { get; set; } = 0;
+
+        /// <summary>
         /// Loại hoạt động
         /// </summary>
         public InventoryLogType Type { get; set; }

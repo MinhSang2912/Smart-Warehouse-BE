@@ -12,7 +12,8 @@ namespace Smart_Warehouse.Models.Profiles
             CreateMap<Inventory, InventoryResponse>()
                 .ForMember(i => i.WarehouseName, opt => opt.MapFrom(src => src.Warehouse.Name))
                 .ForMember(i => i.ProductName, opt => opt.MapFrom(src => src.Product.Name))
-                .ForMember(i=> i.minQuantity, opt => opt.MapFrom(src => src.Product.MinThreshold));
+                .ForMember(i => i.ProductIsActive, opt => opt.MapFrom(src => src.Product.IsActive       ))
+                .ForMember(i => i.minQuantity, opt => opt.MapFrom(src => src.Product.MinThreshold));
 
 
             CreateMap<CreateInventoryRequest, Inventory>();

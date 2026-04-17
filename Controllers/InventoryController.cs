@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smart_Warehouse.Common;
@@ -28,19 +29,16 @@ namespace Smart_Warehouse.Controllers
             var inventory = await _context.Inventories
                 .Include(i => i.Warehouse)
                 .Include(i => i.Product)
-                .Where(i =>  !(i.Quantity == 0 && i.Product.Supplier.IsActive == false))
+                .ProjectTo<InventoryResponse>(_mapper.ConfigurationProvider)
                 .ToListAsync();
             
-
-
-
             var response = _mapper.Map<List<InventoryResponse>>(inventory);
             
             return Ok(response);
         }
 
 
-        [HttpGet("product/{productId}/warehouse/{warehouseId}")]
+        [HttpGet("product/warehouse")]
         public async Task<ActionResult<InventoryResponse>> GetInventoryById(Guid ProductId, int WarehouseId)
         {
             var inventory = await _context.Inventories.FirstOrDefaultAsync(i=>i.ProductId == ProductId && i.WarehouseId == WarehouseId);

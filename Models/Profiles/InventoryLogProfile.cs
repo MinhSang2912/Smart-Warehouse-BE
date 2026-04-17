@@ -10,7 +10,8 @@ namespace Smart_Warehouse.Models.Profiles
     {
         public InventoryLogProfile()
         {
-            CreateMap<InventoryLog, InventoryLogResponse>();
+            CreateMap<InventoryLog, InventoryLogResponse>()
+                .ForMember(l => l.Username, opt => opt.MapFrom(src => src.User.Username));
             CreateMap<CreateInventoryLogRequest, InventoryLog>();
         }
     }

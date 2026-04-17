@@ -25,7 +25,9 @@ namespace Smart_Warehouse.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllInventoryLogs()
         {
-            var inventoryLogs = await _context.InventoryLogs.ToListAsync();
+            var inventoryLogs = await _context.InventoryLogs
+                .Include(i => i.User)
+                .ToListAsync();
 
             var response = _mapper.Map<List<InventoryLogResponse>>(inventoryLogs);
 

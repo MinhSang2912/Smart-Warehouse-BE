@@ -83,11 +83,12 @@ namespace Smart_Warehouse.Controllers
                .Where(i => i.WarehouseId == request.WarehouseId)
                .SumAsync(i => i.Quantity);
 
+            var importQuantity = 0;
             foreach (var detail in request.ImportDetails)
             {
-                currentStock += detail.Quantity;
+                importQuantity += detail.Quantity;
             }
-            if (currentStock > warehouse.MaxStock)
+            if (currentStock + importQuantity > warehouse.MaxStock)
                     return BadRequest(Message.WarehouseOverMaxStock);
 
             // Tạo phiếu nhập
@@ -133,7 +134,9 @@ namespace Smart_Warehouse.Controllers
                     Inventory = inventory, // dùng navigation property thay vì Id nếu entity mới chưa có Id
                     Type = InventoryLogType.Import,
                     Description = request.Description,
+                    Quantity = importQuantity,
                     UserId = request.UserId,
+                    Code = request.Code,
                     IsActive = true,
                     CreatedAt = DateTime.Now
                 };

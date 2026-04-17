@@ -84,6 +84,17 @@ namespace Smart_Warehouse.Controllers
             if (warehouse == null || warehouse.IsActive != true)
                 return NotFound(Message.WarehouseNotFound);
 
+            var currentStock = await _context.Inventories
+                .Where(i => i.WarehouseId == request.WarehouseId)
+                .SumAsync(i => i.Quantity);
+
+            var exportQuantity = 0;
+            foreach (var detail in request.ExportDetails)
+                exportQuantity += detail.Quantity;
+
+            if (currentStock - exportQuantity < 0)
+                return BadRequest(Message.NotEnoughtStock);
+
             //Mapping export
             var export = _mapper.Map<Export>(request);
             export.CreatedAt = DateTime.UtcNow;
@@ -130,6 +141,7 @@ namespace Smart_Warehouse.Controllers
                     Type = InventoryLogType.Export,
                     Description = request.Description,
                     Code = request.Code,
+                    Quantity = exportQuantity,
                     UserId = request.UserId,
                     IsActive = true,
                     CreatedAt = DateTime.UtcNow,

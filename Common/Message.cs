@@ -58,6 +58,7 @@
         public static readonly string InventoryNotFound = "Không tìm thấy tồn kho";
         public static readonly string InventoryAlreadyExists = "Tồn kho đã tồn tại";
         public static readonly string MaxStockExceeded = "Vượt quá tồn kho tối đa";
+        public static readonly string NotEnoughtStock = "Không đủ số lượng tồn";
         public static readonly string InventoryCreated = "Thành công tạo tồn kho";
         public static readonly string InventoryUpdated = "Thành công cập nhật tồn kho";
         public static readonly string InventoryDeleted = "Xóa tồn kho thành công";
