@@ -27,7 +27,6 @@ namespace Smart_Warehouse.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/exports
         [HttpGet]
         public async Task<ActionResult<List<ExportResponse>>> GetAllExports([FromQuery] FillterRequest fillter)
         {
@@ -54,7 +53,6 @@ namespace Smart_Warehouse.Controllers
             return Ok(responses);
         }
 
-        // GET: api/exports/"id"
         //[HttpGet("id")]
         //public async Task<ActionResult<ExportResponse>> GetExportById(int id)
         //{
@@ -71,7 +69,6 @@ namespace Smart_Warehouse.Controllers
         //    return Ok(response);
         //}
 
-        // POST: api/exports
         [HttpPost]
         public async Task<ActionResult> CreateExport([FromBody] CreateExportRequest request)
         {
@@ -154,8 +151,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(Message.ExportCreated);
         }
 
-        // PUT: api/exports/"id"
-        [HttpPatch("id")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateExport(int id, [FromBody] UpdateExportRequest request)
         {
             if (!ModelState.IsValid)

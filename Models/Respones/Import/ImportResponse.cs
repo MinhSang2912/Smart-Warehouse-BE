@@ -1,4 +1,5 @@
-﻿using Smart_Warehouse.Common;
+﻿using Microsoft.OpenApi.Extensions;
+using Smart_Warehouse.Common;
 using Smart_Warehouse.Models.Entities.Order;
 using Smart_Warehouse.Models.Respones.ImportDetail;
 using static Smart_Warehouse.Common.Enums;
@@ -7,6 +8,10 @@ namespace Smart_Warehouse.Models.Respones.Import
 {
     public class ImportResponse
     {
+        /// <summary>
+        /// Id
+        /// </summary>
+        public int Id { get; set; } 
         /// <summary>
         /// Mã phiếu nhập
         /// </summary>
@@ -27,6 +32,7 @@ namespace Smart_Warehouse.Models.Respones.Import
         /// </summary>
         public int SupplierId { get; set; }
 
+
         /// <summary>
         /// Id Kho hàng nhập vào
         /// </summary>
@@ -40,7 +46,10 @@ namespace Smart_Warehouse.Models.Respones.Import
         /// <summary>
         /// Trạng thái phiếu nhập
         /// </summary>
-        public Status Status { get; set; } = Status.Pending;
+        public Status Status { get; set; }         
+
+        // Property hiển thị tiếng Việt
+        public string StatusDisplay => Status.GetDisplayName();
 
         /// <summary>
         /// Mô tả

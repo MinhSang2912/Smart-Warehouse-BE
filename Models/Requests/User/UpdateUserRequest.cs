@@ -13,6 +13,11 @@
         public string? FullName { get; set; }
 
         /// <summary>
+        /// Mật khẩu
+        /// </summary>
+        public string? Password { get; set; }
+
+        /// <summary>
         /// Địa chỉ email của người dùng 
         /// </summary>
         public string? Email { get; set; }

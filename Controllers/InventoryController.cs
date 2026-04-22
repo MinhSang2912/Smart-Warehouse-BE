@@ -53,8 +53,14 @@ namespace Smart_Warehouse.Controllers
         public async Task<ActionResult> UpdateInventory([FromBody] UpdateInventoryRequest request)
         {
             var inventory = await _context.Inventories.FirstOrDefaultAsync(i => i.WarehouseId == request.WarehouseId && i.ProductId == request.ProductId);
-
+            
+            var product = await _context.Products.FindAsync(request.ProductId);
             var warehouse = await _context.Warehouses.FindAsync(request.WarehouseId);
+            if (product == null)
+                return NotFound(Message.ProductNotFound);
+            if (warehouse == null)
+                return NotFound(Message.WarehouseNotFound);
+
             var isMaxStock = request.Quantity > warehouse?.MaxStock;
             if(isMaxStock == true)
             {
@@ -66,6 +72,10 @@ namespace Smart_Warehouse.Controllers
             {
                 _mapper.Map(request, inventory);
                 inventory.UpdatedAt = DateTime.UtcNow;
+                if (request.minQuantity != 0)
+                {
+                    product.MinThreshold = request.minQuantity;
+                }
                 await _context.SaveChangesAsync();
                 msg = "Cập nhật thành công";
             }

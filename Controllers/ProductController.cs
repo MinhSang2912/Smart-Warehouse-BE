@@ -30,18 +30,19 @@ namespace Smart_Warehouse.Controllers
                 .Include(p => p.Supplier)      
                 .ToListAsync();
 
+            
             var results = _mapper.Map<List<ProductResponse>>(products);
             return Ok(results);
         }
 
-        // GET: api/Product/"id"
-        [HttpGet("id")]                     
+        // GET: api/Product/"{id}"
+        [HttpGet("{id}")]                     
         public async Task<ActionResult<ProductResponse>> GetProductById(Guid id)
         {
             var product = await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Supplier)
-                .FirstOrDefaultAsync(x => x.Id == id && x.IsActive);
+                .FirstOrDefaultAsync(x => x.Id == id );
 
             if (product == null)
                 return NotFound(Message.ProductNotFound);
@@ -50,6 +51,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(result);
         }
 
+        // Get: api/Product/by-supplier/"{id}" 
         [HttpGet ("by-supplier/{id}")]
         public async Task<ActionResult<List<ProductResponse>>> GetProductBySupplier(int id)
         {
@@ -69,6 +71,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(response);
         }
 
+        // Get: api/Product/by-warehouse/"{id}" 
         [HttpGet ("by-warehouse/{id}")]
         public async Task<ActionResult<List<ProductResponse>>> GetByWarehouse (int id)
         {
@@ -131,8 +134,8 @@ namespace Smart_Warehouse.Controllers
             return Ok(product);
         }
 
-        // PUT: api/Product/"id" 
-        [HttpPut("id")]
+        // PUT: api/Product/"{id}" 
+        [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, [FromBody] UpdateProductRequest request)
         {
             if (!ModelState.IsValid)
@@ -162,8 +165,8 @@ namespace Smart_Warehouse.Controllers
             return Ok(response);
         }
 
-        // DELETE: api/Product/"id"
-        [HttpDelete("id")]
+        // DELETE: api/Product/"{id}"
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
             var product = await _context.Products.FindAsync(id);

@@ -11,7 +11,7 @@ namespace Smart_Warehouse.Models.Profiles
         public UserProfile()
         {
             CreateMap<User, UserResponse>()
-                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
             CreateMap<CreateUserRequest, User>()
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
             CreateMap<UpdateUserRequest, User>();

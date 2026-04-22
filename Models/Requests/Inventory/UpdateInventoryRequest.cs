@@ -16,5 +16,10 @@
         /// Số lượng tồn kho hiện tại của sản phẩm trong nhà kho
         /// </summary>
         public int? Quantity { get; set; } = 0;
+
+        /// <summary>
+        /// Số lượng tối thiểu
+        /// </summary>
+        public int minQuantity { get; set; } = 0;
     }
 }

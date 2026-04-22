@@ -32,11 +32,11 @@ namespace Smart_Warehouse.Controllers
             return Ok(response);
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<SupplierResponse>> GetSupplierById(int id)
         {
             var supplier = await _context.Suppliers.FindAsync(id);
-            if (supplier == null || !supplier.IsActive)
+            if (supplier == null )
                 return NotFound(Message.SupplierNotFound);
 
             var response = _mapper.Map<SupplierResponse>(supplier);
@@ -62,7 +62,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(supplier);
         }
 
-        [HttpPatch("id")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateSupplier(int id, [FromBody] UpdateSupplierRequest request)
         {
             var supplier = await _context.Suppliers.FindAsync(id);
@@ -78,7 +78,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteSupplier(int id)
         {
             var supplier = await _context.Suppliers.FindAsync(id);

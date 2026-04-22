@@ -7,7 +7,7 @@ namespace Smart_Warehouse.Models.Entities
         /// <summary>
         /// Id sản phẩm
         /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public new Guid Id { get; set; } = Guid.NewGuid();
 
         /// <summary>
         /// Code sản phẩm
@@ -27,7 +27,7 @@ namespace Smart_Warehouse.Models.Entities
         /// <summary>
         /// Cảnh báo thiếu hàng
         /// </summary>
-        public int MinThreshold { get; set; } = 10; 
+        public int MinThreshold { get; set; } = 50; 
 
         /// <summary>
         /// Đơn vị tính

@@ -38,7 +38,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(results);
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<UserResponse>> GetUserById(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -48,7 +48,7 @@ namespace Smart_Warehouse.Controllers
 
             var role = await _context.Roles.FindAsync(user.RoleId);
             var result = _mapper.Map<UserResponse>(user);
-            result.Role = role.Name;
+            result.RoleName = role.Name;
 
             return Ok(result);
         }
@@ -75,7 +75,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(user);
         }
 
-        [HttpPatch("id")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> Update(int Id, [FromBody] UpdateUserRequest request)
         {
             var user = await _context.Users.FindAsync(Id);
@@ -83,14 +83,14 @@ namespace Smart_Warehouse.Controllers
                 return NotFound(Message.UserNotFound);
 
             _mapper.Map(request, user);
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
             return Ok(Message.UserUpdated);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var user = await _context.Users.FindAsync(id);

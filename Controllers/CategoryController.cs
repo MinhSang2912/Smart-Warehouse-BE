@@ -33,7 +33,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(response);
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<CategoryResponse>> GetCategoryById(int id)
         {
             var category = await _context.Categories.FindAsync(id);
@@ -64,7 +64,7 @@ namespace Smart_Warehouse.Controllers
         }
 
 
-        [HttpPatch("id")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryRequest request)
         {
             var category = await _context.Categories.FindAsync(id);
@@ -79,7 +79,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(category);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);

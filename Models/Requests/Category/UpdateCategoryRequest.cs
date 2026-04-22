@@ -13,5 +13,10 @@ namespace Smart_Warehouse.Models.Requests.Category
         /// Mô tả danh mục
         /// </summary>
         public string? Description { get; set; }
+
+        /// <summary>
+        /// Trạng thái
+        /// </summary>
+        public bool isActive { get; set; } = true;
     }
 }

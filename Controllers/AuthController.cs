@@ -29,8 +29,6 @@ namespace Smart_Warehouse.Controllers
         {
             try
             {
-                Console.WriteLine($"[LOGIN] Nhận request: Username = {request?.Username}");
-
                 if (request == null || string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
                 {
                     return BadRequest("Username và Password không được để trống");
@@ -39,29 +37,35 @@ namespace Smart_Warehouse.Controllers
                 var user = await _context.Users
                     .FirstOrDefaultAsync(x => x.Username == request.Username);
 
-                Console.WriteLine($"[LOGIN] Tìm user: {(user != null ? "Tìm thấy" : "Không tìm thấy")}");
-
                 if (user == null)
                     return BadRequest(Message.UserNotFound);
 
-                // Kiểm tra mật khẩu
                 bool isPasswordValid = false;
 
-                try
+                // Ưu tiên kiểm tra BCrypt (định dạng chuẩn)
+                if (user.Password.StartsWith("$2") && user.Password.Length > 50)
                 {
-                    if (user.Password.StartsWith("$2a$") || user.Password.StartsWith("$2b$") || user.Password.StartsWith("$2y$"))
+                    try
                     {
                         isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
                     }
-                    else
+                    catch
                     {
-                        isPasswordValid = request.Password == user.Password; // fallback cho password plain
+                        isPasswordValid = false;
                     }
                 }
-                catch (Exception bcEx)
+                else
                 {
-                    Console.WriteLine($"[LOGIN] Lỗi BCrypt: {bcEx.Message}");
-                    return BadRequest("Lỗi kiểm tra mật khẩu. Password trong DB có thể không đúng format.");
+                    // Fallback cho trường hợp mật khẩu plain text (chỉ dùng tạm thời)
+                    isPasswordValid = request.Password == user.Password;
+
+                    // Nếu đăng nhập thành công bằng plain text → tự động hash lại mật khẩu
+                    if (isPasswordValid)
+                    {
+                        user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+                        await _context.SaveChangesAsync();
+                        Console.WriteLine($"[LOGIN] Đã tự động hash lại mật khẩu cho user: {user.Username}");
+                    }
                 }
 
                 if (!isPasswordValid)
@@ -69,7 +73,7 @@ namespace Smart_Warehouse.Controllers
 
                 var token = _jwtService.GenerateToken(user);
 
-                Console.WriteLine($"[LOGIN] Đăng nhập thành công: {user.Username}");
+                Console.WriteLine($"[LOGIN] Đăng nhập thành công: {user.Username} - RoleId: {user.RoleId}");
 
                 return Ok(new
                 {
@@ -78,7 +82,8 @@ namespace Smart_Warehouse.Controllers
                     {
                         user.Id,
                         user.Username,
-                        user.RoleId
+                        user.RoleId,
+                        user.FullName   // nếu có
                     }
                 });
             }
@@ -87,9 +92,7 @@ namespace Smart_Warehouse.Controllers
                 Console.WriteLine("=== LỖI LOGIN CONTROLLER ===");
                 Console.WriteLine($"Message: {ex.Message}");
                 Console.WriteLine($"StackTrace: {ex.StackTrace}");
-                Console.WriteLine("===============================");
-
-                return StatusCode(500, new { error = "Lỗi server nội bộ", detail = ex.Message });
+                return StatusCode(500, new { error = "Lỗi server nội bộ" });
             }
         }
 

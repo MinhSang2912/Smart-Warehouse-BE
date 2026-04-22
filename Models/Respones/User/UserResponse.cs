@@ -39,9 +39,13 @@ namespace Smart_Warehouse.Models.Respones.User
         public DateTime? DateofBirth { get; set; }
 
         /// <summary>
+        /// Id vai trò
+        /// </summary>
+        public int? RoleId { get; set; }
+        /// <summary>
         /// Tên vai trò
         /// </summary>
-        public string Role { get; set; }
+        public string? RoleName { get; set; }
 
         /// <summary>
         /// Hoạt động

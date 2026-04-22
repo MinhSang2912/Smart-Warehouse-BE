@@ -4,7 +4,7 @@ namespace Smart_Warehouse.Models.Respones.Product
 {
     public class ProductResponse : BaseEntity
     {
-        public Guid Id { get; set; }
+        public new Guid Id { get; set; } 
         /// <summary>
         /// Code sản phẩm
         /// </summary>
@@ -23,7 +23,7 @@ namespace Smart_Warehouse.Models.Respones.Product
         /// <summary>
         /// Tên danh mục
         /// </summary>
-        public string Category { get; set; }
+        public string? CategoryName { get; set; }
 
         /// <summary>
         /// Cảnh báo thiếu hàng
@@ -43,6 +43,6 @@ namespace Smart_Warehouse.Models.Respones.Product
         /// <summary>
         /// Tên nhà cung cấp
         /// </summary>
-        public string Supplier { get; set; }
+        public string SupplierName { get; set; } = "";
     }
 }
