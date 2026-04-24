@@ -44,5 +44,10 @@ namespace Smart_Warehouse.Models.Respones.Product
         /// Tên nhà cung cấp
         /// </summary>
         public string SupplierName { get; set; } = "";
+
+        /// <summary>
+        /// Số lượng 
+        /// </summary>
+        public int? Quantity { get; set; }
     }
 }

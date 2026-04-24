@@ -80,7 +80,6 @@ namespace Smart_Warehouse.Controllers
             if (warehouse == null || warehouse.IsActive != true)
                 return NotFound(Message.WarehouseNotFound);
 
-
             // Lấy danh sách sản phẩm trong kho
             var inventories = await _context.Inventories
                 .Where(i => i.WarehouseId == id && i.IsActive == true)
@@ -100,7 +99,7 @@ namespace Smart_Warehouse.Controllers
                 return NotFound(Message.ProductNotFound);
 
             var response = _mapper.Map<List<ProductResponse>>(product);
-
+            
             return Ok(response);
         }
 

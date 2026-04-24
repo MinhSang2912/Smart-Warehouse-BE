@@ -40,7 +40,7 @@ namespace Smart_Warehouse.Controllers
 
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<WarehouseResponse>> GetWarehouseById(int id)
         {
             var warehouse = await _context.Warehouses.FindAsync(id);
@@ -69,7 +69,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(warehouse);
         }
 
-        [HttpPatch("id")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateWarehouse(int id, [FromBody] UpdateWarehouseRequest request)
         {
             var warehouseIsExists = await _context.Warehouses.FindAsync(id);
@@ -85,7 +85,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(warehouse);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteWarehouse(int id)
         {
             var warehouse = await _context.Warehouses.FindAsync(id);

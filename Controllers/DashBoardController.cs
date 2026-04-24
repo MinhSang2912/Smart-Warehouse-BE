@@ -72,6 +72,8 @@ namespace Smart_Warehouse.Controllers
             var inventory = await _context.Inventories
                 .Include(i => i.Product)
                 .Where(i => i.WarehouseId == warehouseId)
+                .Where(i => i.Product.IsActive == true)
+                .Where(i => i.Quantity != 0)
                 .ToListAsync();
 
             var response = new List<DashBoardStockResponse>();

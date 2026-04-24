@@ -15,7 +15,7 @@
         /// <summary>
         /// Mật khẩu
         /// </summary>
-        public string? Password { get; set; }
+        public string? Password { get; set; } = null;
 
         /// <summary>
         /// Địa chỉ email của người dùng 

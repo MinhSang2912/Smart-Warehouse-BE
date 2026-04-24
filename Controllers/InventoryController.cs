@@ -38,10 +38,10 @@ namespace Smart_Warehouse.Controllers
         }
 
 
-        [HttpGet("product/warehouse")]
-        public async Task<ActionResult<InventoryResponse>> GetInventoryById(Guid ProductId, int WarehouseId)
+        [HttpGet("product/{pId}/warehouse/{wId}")]
+        public async Task<ActionResult<InventoryResponse>> GetInventoryById(Guid pId, int wId)
         {
-            var inventory = await _context.Inventories.FirstOrDefaultAsync(i=>i.ProductId == ProductId && i.WarehouseId == WarehouseId);
+            var inventory = await _context.Inventories.FirstOrDefaultAsync(i=>i.ProductId == pId && i.WarehouseId == wId);
             if (inventory == null)
                 return NotFound(Message.InventoryNotFound);
 
@@ -52,7 +52,7 @@ namespace Smart_Warehouse.Controllers
         [HttpPatch]
         public async Task<ActionResult> UpdateInventory([FromBody] UpdateInventoryRequest request)
         {
-            var inventory = await _context.Inventories.FirstOrDefaultAsync(i => i.WarehouseId == request.WarehouseId && i.ProductId == request.ProductId);
+            
             
             var product = await _context.Products.FindAsync(request.ProductId);
             var warehouse = await _context.Warehouses.FindAsync(request.WarehouseId);
@@ -66,9 +66,12 @@ namespace Smart_Warehouse.Controllers
             {
                 return BadRequest(Message.MaxStockExceeded);
             }
-
+            var inventory = await _context.Inventories
+                .FirstOrDefaultAsync(i => i.WarehouseId == request.WarehouseId
+                                       && i.ProductId == request.ProductId
+                                       && i.IsActive == true);
             var msg ="";
-            if (inventory != null && inventory.IsActive == true)
+            if (inventory != null )
             {
                 _mapper.Map(request, inventory);
                 inventory.UpdatedAt = DateTime.UtcNow;

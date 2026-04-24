@@ -82,8 +82,12 @@ namespace Smart_Warehouse.Controllers
             if (user == null || !user.IsActive)
                 return NotFound(Message.UserNotFound);
 
+            if (request.Password == null)
+                request.Password = user.Password;
+            else
+                request.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
             _mapper.Map(request, user);
-            user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
