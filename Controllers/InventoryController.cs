@@ -52,8 +52,6 @@ namespace Smart_Warehouse.Controllers
         [HttpPatch]
         public async Task<ActionResult> UpdateInventory([FromBody] UpdateInventoryRequest request)
         {
-            
-            
             var product = await _context.Products.FindAsync(request.ProductId);
             var warehouse = await _context.Warehouses.FindAsync(request.WarehouseId);
             if (product == null)
@@ -94,21 +92,6 @@ namespace Smart_Warehouse.Controllers
 
             return Ok(msg);
         }
-
-        //[HttpPatch]
-        //public async Task<ActionResult> UpdateInventory([FromBody] UpdateInventoryRequest request)
-        //{
-        //    var inventory = await _context.Inventories.FirstOrDefaultAsync(i => i.WarehouseId == request.WarehouseId && i.ProductId == request.ProductId);
-        //    if (inventory == null)
-        //        return NotFound(Message.InventoryNotFound);
-
-        //    var response = _mapper.Map(request, inventory);
-        //    inventory.UpdatedAt = DateTime.UtcNow;
-
-        //    await _context.SaveChangesAsync();
-
-        //    return Ok(response);
-        //}
 
         [HttpDelete]
         public async Task<ActionResult> DeleteInventory(UpdateInventoryRequest request)

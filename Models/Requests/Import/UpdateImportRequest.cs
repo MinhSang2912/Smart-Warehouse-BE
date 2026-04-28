@@ -39,21 +39,21 @@ namespace Smart_Warehouse.Models.Requests.Import
         /// <summary>
         /// Ngày nhận hàng
         /// </summary>
-        public DateTime? ReceivedDate { get; set; }
+        public DateTime? ReceivedDate { get; set; } = null;
 
         /// <summary>
         /// Tên người nhận hàng
         /// </summary>
-        public string? ReceiverName { get; set; }
+        public string? Receiver { get; set; }
 
         /// <summary>
         /// Tên người vận chuyển
         /// </summary>
-        public string? CarrierName { get; set; }
+        public string? Carrier { get; set; }
 
         /// <summary>
         /// Tên người duyệt
         /// </summary>
-        public string? ApproverName { get; set; }
+        public string? Approver { get; set; }
     }
 }

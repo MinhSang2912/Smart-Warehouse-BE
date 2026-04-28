@@ -23,7 +23,8 @@ namespace Smart_Warehouse.Data
             );
             modelBuilder.Entity<User>().HasData(
                 new User { Id = 1, Username = "admin", Password = "admin123", RoleId = 1, IsActive = true, CreatedAt = DateTime.Today },
-                new User { Id = 2, Username = "Sang", Password = "Sang123", RoleId = 2, IsActive = true, CreatedAt = DateTime.Today }
+                new User { Id = 2, Username = "SangManager", Password = "Sang123", RoleId = 2, IsActive = true, CreatedAt = DateTime.Today },
+                new User { Id = 3, Username = "SangStaff", Password = "Sang123", RoleId = 3, IsActive = true, CreatedAt = DateTime.Today }
             );
 
         }

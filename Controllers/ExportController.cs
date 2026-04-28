@@ -94,7 +94,7 @@ namespace Smart_Warehouse.Controllers
 
             //Mapping export
             var export = _mapper.Map<Export>(request);
-            export.CreatedAt = DateTime.UtcNow;
+            export.CreatedAt = DateTime.Now;
             export.IsActive = true;
             export.Status = Status.Pending;
             _context.Exports.Add(export);
@@ -125,7 +125,7 @@ namespace Smart_Warehouse.Controllers
                 if (inventory == null || inventory.IsActive != true)
                     return NotFound(Message.InventoryNotFound);
 
-               if (inventory.Quantity - detail.Quantity < 0)
+                if (inventory.Quantity - detail.Quantity < 0)
                     return BadRequest(Message.ExceedingQuantity);
 
                 inventory.Quantity -= detail.Quantity;
@@ -162,11 +162,49 @@ namespace Smart_Warehouse.Controllers
                 return NotFound(Message.ExportNotFound);
 
             var response = _mapper.Map(request, export);
-            export.UpdatedAt = DateTime.UtcNow;
+            export.UpdatedAt = DateTime.Now;
+
+            //Nếu từ chối hoặc giao thất bại thì hoàn lại số lượng
+            if (request.Status == Status.Failed || request.Status == Status.Rejected)
+            {
+                var exportDetails = await _context.ExportDetails
+                    .Where(d => d.ExportId == id)
+                    .ToListAsync();
+
+                foreach (var detail in exportDetails)
+                {
+                    var inventory = await _context.Inventories
+                        .Where(i => i.ProductId == detail.ProductId
+                                 && i.WarehouseId == export.WarehouseId
+                                 && i.IsActive == true)
+                        .FirstOrDefaultAsync();
+
+                    if (inventory == null)
+                        return NotFound(Message.InventoryNotFound);
+
+                    // Bù lại số lượng
+                    inventory.Quantity += detail.Quantity;
+                    inventory.UpdatedAt = DateTime.Now;
+
+                    // Ghi log hoàn trả
+                    var log = new InventoryLog
+                    {
+                        Inventory = inventory,
+                        Type = InventoryLogType.Export,           
+                        Description = request.Description ?? "Xuất kho thất bại - hoàn trả",
+                        Code = export.Code,
+                        Quantity = detail.Quantity,             
+                        UserId = request.UserId,
+                        IsActive = true,
+                        CreatedAt = DateTime.Now,
+                    };
+                    _context.InventoryLogs.Add(log);
+                }
+            }
 
             await _context.SaveChangesAsync();
 
-            return Ok(response);
+            return Ok(Message.ExportUpdated);
         }
     }
 }

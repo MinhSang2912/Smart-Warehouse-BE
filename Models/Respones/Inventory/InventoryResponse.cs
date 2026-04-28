@@ -15,7 +15,11 @@ namespace Smart_Warehouse.Models.Respones.Inventory
         /// </summary>
         public string? WarehouseName { get; set; }
 
-
+        /// <summary>
+        /// Trạng thái hoạt động của nhà kho
+        /// </summary>
+        public bool? WarehouseIsActive { get; set; }
+        
         /// <summary>
         /// Id sản phẩm
         /// </summary>

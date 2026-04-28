@@ -20,7 +20,7 @@ namespace Smart_Warehouse.Models.Entities
         /// <summary>
         /// Ngay giờ thực thể được tạo ra (sử dụng UTC để tránh vấn đề múi giờ).
         /// </summary>
-        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Ngày giờ cập nhật 

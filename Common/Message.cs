@@ -67,6 +67,7 @@
         #region ImportExport
         public static readonly string ImportInValid = "Phiếu nhập không hợp lệ";
         public static readonly string ImportCreated = "Tạo phiếu nhập thành công";
+        public static readonly string ImportUpdate = "Cập nhật phiếu thành công";
         public static readonly string ExportInValid = "Phiếu xuất không hợp lệ";
         public static readonly string ImportNotFound = "Không tìm thấy phiếu nhập";
         public static readonly string ExportNotFound = "Không tìm thấy phiếu xuất";
