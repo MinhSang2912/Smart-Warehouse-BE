@@ -72,6 +72,8 @@ namespace Smart_Warehouse.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateWarehouse(int id, [FromBody] UpdateWarehouseRequest request)
         {
+            if (request.Name == null)
+                return BadRequest(Message.WarehouseNotFound);
             var warehouseIsExists = await _context.Warehouses.FindAsync(id);
             if (warehouseIsExists == null || !warehouseIsExists.IsActive)
                 return NotFound(Message.WarehouseNotFound);

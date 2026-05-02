@@ -52,6 +52,7 @@
 
         #region Warehouse
         public static readonly string WarehouseNotFound = "Không tìm thấy nhà kho";
+        public static readonly string WarehouseNotNull = "Nhà kho không được rỗng";
         public static readonly string WarehouseAlreadyExists = "Nhà kho đã tồn tại";
         public static readonly string WarehouseOverMaxStock = "Số lượng vượt quá sức chứa nhà kho";
         public static readonly string WarehouseCreated = "Thành công tạo nhà kho";
