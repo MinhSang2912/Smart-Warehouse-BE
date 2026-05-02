@@ -62,7 +62,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(supplier);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateSupplier(int id, [FromBody] UpdateSupplierRequest request)
         {
             var supplier = await _context.Suppliers.FindAsync(id);

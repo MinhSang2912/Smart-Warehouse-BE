@@ -107,7 +107,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(Message.ImportCreated);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateImport(int id, [FromBody] UpdateImportRequest request)
         {
             var import = await _context.Imports.FindAsync(id);

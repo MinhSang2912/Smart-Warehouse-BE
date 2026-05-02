@@ -69,7 +69,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(warehouse);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateWarehouse(int id, [FromBody] UpdateWarehouseRequest request)
         {
             var warehouseIsExists = await _context.Warehouses.FindAsync(id);

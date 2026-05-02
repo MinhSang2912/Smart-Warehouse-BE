@@ -151,7 +151,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(Message.ExportCreated);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateExport(int id, [FromBody] UpdateExportRequest request)
         {
             if (!ModelState.IsValid)

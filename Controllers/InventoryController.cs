@@ -49,7 +49,7 @@ namespace Smart_Warehouse.Controllers
             return Ok(response);
         }
 
-        [HttpPatch]
+        [HttpPut]
         public async Task<ActionResult> UpdateInventory([FromBody] UpdateInventoryRequest request)
         {
             var product = await _context.Products.FindAsync(request.ProductId);

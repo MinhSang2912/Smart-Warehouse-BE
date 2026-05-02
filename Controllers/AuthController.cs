@@ -37,7 +37,7 @@ namespace Smart_Warehouse.Controllers
                 var user = await _context.Users
                     .FirstOrDefaultAsync(x => x.Username == request.Username);
 
-                if (user == null)
+                if (user == null || user.IsActive == false)
                     return BadRequest(Message.UserNotFound);
 
                 bool isPasswordValid = false;

@@ -60,11 +60,11 @@ namespace Smart_Warehouse.Controllers
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
 
-            return Ok(category);
+            return Ok(Message.CategoryCreated);
         }
 
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryRequest request)
         {
             var category = await _context.Categories.FindAsync(id);
@@ -76,15 +76,21 @@ namespace Smart_Warehouse.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(category);
+            return Ok(Message.CategoryUpdated);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category == null    )
+            if (category == null  || !category.IsActive)
                 return NotFound(Message.CategoryNotFound);
+
+            var product = await _context.Products
+                .Where(p => p.Category == category && p.IsActive == true)
+                .ToListAsync();
+            if (product.Count != 0)
+                return BadRequest(Message.CategoryHaveProduct);
 
             category.IsActive = false;
             category.UpdatedAt = DateTime.UtcNow;

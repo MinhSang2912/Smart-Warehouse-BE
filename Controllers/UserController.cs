@@ -34,7 +34,6 @@ namespace Smart_Warehouse.Controllers
 
             var results = _mapper.Map<List<UserResponse>>(users);
             
-
             return Ok(results);
         }
 
@@ -47,6 +46,9 @@ namespace Smart_Warehouse.Controllers
                 return NotFound(Message.UserNotFound);
 
             var role = await _context.Roles.FindAsync(user.RoleId);
+            if (role == null)
+                return NotFound(Message.RoleNotFound);
+
             var result = _mapper.Map<UserResponse>(user);
             result.RoleName = role.Name;
 
@@ -57,7 +59,7 @@ namespace Smart_Warehouse.Controllers
         public async Task<ActionResult> Create([FromBody] CreateUserRequest request)
         {
             if (request.Username == null)
-                return BadRequest(Message.UserNotFound);
+                return BadRequest(Message.UserNotNull);
             if (request.Password == null)
                 return BadRequest(Message.PasswordNotNull);
 
@@ -72,10 +74,10 @@ namespace Smart_Warehouse.Controllers
             _context.Users.Add(user);
 
             await _context.SaveChangesAsync();
-            return Ok(user);
+            return Ok(Message.UserCreated);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> Update(int Id, [FromBody] UpdateUserRequest request)
         {
             var user = await _context.Users.FindAsync(Id);

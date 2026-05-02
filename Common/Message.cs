@@ -2,6 +2,10 @@
 {
     public class Message
     {
+        #region Role
+        public static readonly string RoleNotFound = "Không tìm thấy vai trò";
+        #endregion
+
         #region User
         public static readonly string UserNotFound = "Không tìm thấy người dùng";
         public static readonly string InvalidPassword = "Mật khẩu không đúng";
@@ -19,6 +23,7 @@
         #region Category
         public static readonly string CategoryNotFound = "Không tìm thấy danh mục";
         public static readonly string CategoryAlreadyExists = "Danh mục đã tồn tại";
+        public static readonly string CategoryHaveProduct = "Danh mục vẫn còn sản phẩm";
         public static readonly string CategoryCreated = "Danh mục đã được tạo thành công";
         public static readonly string CategoryUpdated = "Danh mục đã được cập nhật thành công";
         public static readonly string CategoryDeleted = "Thành công xóa danh mục";
